@@ -5,7 +5,9 @@
 <meta lang="UTF-8"/>
 <title>EPC3010 - Graph</title>
 <link rel="stylesheet" href="/static/css/style.css"/>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="/static/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script src="/static/js/Chart.min.js"></script>
 <script src="/static/js/graph.js"></script>
 </head>
@@ -15,7 +17,7 @@
 </header>
 <section id="chart_section">
 <label for="date">Select date</label>
-<input id="date" type="date" name="date">
+<input id="datepicker" type="text">
 <canvas id="chart" width="1024" height="400">
 </canvas>
 </section>
