@@ -43,10 +43,13 @@ class Log(db.Model):
             'values': self.values
         }
 
-@app.route('/api')
-def api():
-
-    return jsonify(json_list = [i.serialize for i in Log.query.order_by(Log.date.desc()).all()])
+@app.route('/api/<date>')
+def api(date):
+    print date
+    return jsonify(json_list = [i.serialize for i in Log.query
+    .order_by(Log.date.desc())
+    .filter(Log.date.like(date + '%'))
+    ])
 
 def scrape():
         power_levels = []

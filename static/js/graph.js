@@ -4,10 +4,27 @@ var log = {
   datasets: []
 };
 
-var data2 = jQuery.getJSON('/api', function(data) {
+var downstream = [];
+var upstream = [];
+var snr = [];
+
+var data2 = jQuery.getJSON('/api/2014-10-27', function(data) {
   $.each(data['json_list'], function(key, val) {
-    console.log(data['json_list'])
+      log.labels.push(val['date'][1]);
+      downstream.push(val['values']['Downstream']['Channel 1']['Power level']);
   });
+});
+
+data2.complete(function() {
+    var dataset = {'data': downstream,
+        'fillColor': "rgba(220,280,220,0.5)",
+        'stokeColor': "rgba(220,220,220,1)"};
+    log.datasets.push(dataset);
+    console.log(log);
+window.addEventListener("load", function load(event) {
+  ctx = document.getElementById("chart").getContext("2d");
+  chart = new Chart(ctx).Line(log);
+}, false);
 });
 
 var data = {
@@ -48,9 +65,5 @@ var data3 = {
     ]
 };
 
-console.log(log);
+console.log(data3);
 
-window.addEventListener("load", function load(event) {
-  ctx = document.getElementById("chart").getContext("2d");
-  chart = new Chart(ctx).Line(data);
-}, false);
