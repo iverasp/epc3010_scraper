@@ -15,14 +15,25 @@ var data2 = jQuery.getJSON('/api/2014-10-27', function(data) {
   });
 });
 
+Date.prototype.toDateInputValue = (function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0,10);
+});
+
 data2.complete(function() {
-    var dataset = {'data': downstream,
-        'fillColor': "rgba(220,280,220,0.5)",
-        'stokeColor': "rgba(220,220,220,1)"};
+    var dataset = {data: downstream,
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)"}
     log.datasets.push(dataset);
     console.log(log);
 window.addEventListener("load", function load(event) {
   ctx = document.getElementById("chart").getContext("2d");
+  document.getElementById("date").value = new Date().toDateInputValue();
   chart = new Chart(ctx).Line(log);
 }, false);
 });
@@ -32,8 +43,6 @@ var data = {
   datasets: [
     {
       label: "Downstream channel",
-      fillColor : "rgba(220,280,220,0.5)",
-      strokeColor : "rgba(220,220,220,1)",
       data: [30, 20, 30, 30, 20, 30]
     }
   ]
@@ -44,12 +53,6 @@ var data3 = {
     datasets: [
         {
             label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
             data: [65, 59, 80, 81, 56, 55, 40]
         },
         {
