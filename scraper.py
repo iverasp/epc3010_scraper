@@ -93,6 +93,12 @@ def index():
 def rawlog():
     return render_template('rawlog.html', data=Log.query.order_by(Log.date.desc()).all())
 
+@app.route('/rawlog/<date>')
+def rawlog_date(date):
+    return render_template('rawlog.html', data=Log.query
+    .order_by(Log.date.desc())
+    .filter(Log.date.like(date + '%')))
+
 @app.route('/graph')
 def graph():
     return render_template('graph.html', data=Log.query.order_by(Log.date.desc()).all())
